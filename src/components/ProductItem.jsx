@@ -1,40 +1,51 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import { colors } from '../global/colorPalette';
 
-const ProductItem = ({item}) => {
+const ProductItem = ({ item, navigation }) => {
+
   return (
-    <TouchableOpacity style={styles.container}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Image
+    <Pressable
+      style={styles.container}
+      onPress={() => navigation.navigate('Detalles',item.id)}>
+      <Text style={styles.title}>{item.title}</Text>
+      <Image
         style={styles.image}
         resizeMode='cover'
         source={{ uri: item.images[0] }}
-        />
-    </TouchableOpacity>
+      />
+    </Pressable>
   )
 }
 
 export default ProductItem;
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        padding:10,
-        flexDirection:'row',
-        justifyContent:'space-between',
-        borderRadius:30,
-        padding:10,
-        margin:5,
+  container: {
+    flex: 1,
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderRadius: 30,
+    padding: 5,
+    margin: 5,
 
-        backgroundColor:colors.middleBlue,
+    backgroundColor: colors.orange,
+    shadowColor: colors.black,
+    shadowOffset: {
+        height: 10,
+        width: 10,
     },
-    title:{
-      fontSize:30,
-    },
-    image:{
-        borderRadius:30,
-        padding:10,
-        width:100,
-        height:100,
-    },
+    elevation: 5,
+    shadowOpacity: 50, 
+    shadowRadius: 20
+  },
+  title: {
+    fontSize: 24,
+  },
+  image: {
+    borderRadius: 30,
+    padding: 10,
+    width: 50,
+    height: 50,
+  },
 })

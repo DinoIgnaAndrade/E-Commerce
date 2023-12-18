@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useState } from 'react';
 import { TextInput } from 'react-native-web';
 
@@ -12,37 +12,62 @@ const SearchInput = ({
 }) => {
 
     const [search, setSearch] = useState('');
+    const [error, setError] = useState('');
+
+    //expresion regular
+    const ErrorOnSearchHandler = () => {
+        // w = words d = digits es un limitador para que no se escriban simbolos especiales
+        const regEx = /[^a-zA-Z0-9]/;
+        if (regEx.test(search)) {
+            setError('Solo caracteres y Digitos');
+            setSearch('');
+        } else {
+            setError('');
+            onSearchHandlerEvent(search);
+        }
+    }
 
     return (
-        <View style={styles.container}>
-            <TextInput
-                style={styles.input}
-                onChangeText={setSearch}
-                placeholder='Buscar...'
-                value={search} />
+        <>
+            <View style={styles.container}>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={setSearch}
+                    placeholder='Buscar...'
+                    value={search} />
 
-            <TouchableOpacity
-                onPress={() => onSearchHandlerEvent(search)}
-                style={styles.search}
-            >
-                <FontAwesomeIcon
-                    icon={faMagnifyingGlass}
-                    size={30}
-                    color={' darkGreen '}
-                />
-            </TouchableOpacity>
+                <Pressable
+                    onPress={() => ErrorOnSearchHandler(search)}
+                    style={styles.search}
+                >
+                    <FontAwesomeIcon
+                        icon={faMagnifyingGlass}
+                        size={30}
+                        color={' lightGreen '}
+                    />
+                </Pressable>
 
-            <TouchableOpacity
-                onPress={()=> {onSearchHandlerEvent(''), setSearch('')}}
-                style={styles.cancel}
-            >
-                <FontAwesomeIcon
-                    icon={faXmark}
-                    size={32}
-                    color={' darkRed '}
-                />
-            </TouchableOpacity>
-        </View>
+                <Pressable
+                    onPress={() => { onSearchHandlerEvent(''), setSearch('') }}
+                    style={styles.cancel}
+                >
+                    <FontAwesomeIcon
+                        icon={faXmark}
+                        size={32}
+                        color={' Red '}
+                    />
+                </Pressable>
+            </View>
+            {
+                error
+                ?
+                <View>
+                    <Text>{error}</Text>
+                </View>
+                :
+                null
+            }
+        </>
     )
 }
 
@@ -50,22 +75,22 @@ export default SearchInput;
 
 const styles = StyleSheet.create({
     container: {
-        padding:5,
-        margin:5,
+        padding: 5,
+        margin: 5,
         flexDirection: 'row',
         justifyContent: 'center',
-        backgroundColor: colors.black,
+        backgroundColor: colors.middleBlue,
         borderRadius: 30,
     },
     input: {
-        borderRadius:30,
-        paddingStart:1,
+        borderRadius: 30,
+        paddingStart: 1,
         alignSelf: 'center',
         fontSize: 25,
         width: '70%',
         height: 'auto',
 
-        backgroundColor:'white',
+        backgroundColor: 'white',
     },
     search: {
         padding: 10,

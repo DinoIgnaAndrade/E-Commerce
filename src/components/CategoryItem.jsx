@@ -1,22 +1,18 @@
-import { Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, Pressable } from "react-native";
 import { colors } from '../global/colorPalette';
 import Card from './Card';
 
 const CategoryItem = ({
-
         category, 
-        onSelectCategoryEvent 
-    
+        navigation
     }) => {
 
     return (
-
-        <TouchableOpacity onPress={()=>onSelectCategoryEvent(category)}>
+        <Pressable onPress={()=>navigation.navigate('Productos', {category})}>
             <Card style={styles.cardContainer}>
                 <Text style={styles.text}>{category}</Text>
             </Card>
-        </TouchableOpacity>
-
+        </Pressable>
     )
 }
 

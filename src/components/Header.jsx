@@ -1,46 +1,56 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Button } from 'react-native';
 
 import { colors } from '../global/colorPalette';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faBackwardStep } from '@fortawesome/free-solid-svg-icons/faBackwardStep'
+import { faCaretLeft } from '@fortawesome/free-solid-svg-icons/faCaretLeft'
+import { useEffect, useState } from 'react';
 
 const Header = ({
     title,
     color,
-    category,
-    onSelectCategoryEvent
+    navigation,
+    route
 }) => {
+
+    const [ifButton, setIfButton] = useState(true)
+
+    useEffect(() => {
+        if(route.name==='Categorias'){
+            setIfButton(true);
+        }else{
+            setIfButton(false);
+        };
+    }, [ifButton])
+    
+
     return (
-        <View>
+        <>
             {
-                category
+                ifButton
                     ?
-                    (
-                        <View style={[styles.headerWithButtom, {backgroundColor: color}]}>
-                            <TouchableOpacity
-                                onPress={() => onSelectCategoryEvent('')}
+                    <View>
+                        <View style={[styles.headerContainer, { backgroundColor: color }]}>
+                            <Text style={styles.headerTitle}>{title}</Text>
+                        </View>
+                    </View>
+                    :
+                    <View>
+                        <View style={[styles.headerWithButtom, { backgroundColor: color }]}>
+                            <Pressable
+                                onPress={() => navigation.goBack()}
                                 style={styles.backButtom}
                             >
                                 <FontAwesomeIcon
-                                    icon={faBackwardStep}
-                                    color={colors.lightBlue}
-                                    size={30}
+                                    icon={faCaretLeft}
+                                    color={colors.orange}
+                                    size={40}
                                 />
-                            </TouchableOpacity>
+                            </Pressable>
                             <Text style={styles.headerTitle}>{title}</Text>
                         </View>
-                    )
-                    :
-                    (
-                        <View
-                            style={[styles.headerContainer, { backgroundColor: color }]}>
-                                <Text style={styles.headerTitle}>{title}</Text>
-                        </View>
-                    )
-                    }
-
-
-        </View>
+                    </View>
+            }
+        </>
     )
 }
 
@@ -54,9 +64,9 @@ const styles = StyleSheet.create({
         borderBottomEndRadius: 100,
         borderBottomStartRadius: 100,
     },
-    headerWithButtom:{
+    headerWithButtom: {
         flexDirection: 'row',
-        justifyContent:'center',
+        justifyContent: 'center',
         height: 'auto',
         alignItems: 'center',
         borderBottomEndRadius: 100,
@@ -69,9 +79,9 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     backButtom: {
-        position:'absolute',
-        left:'5%',
+        position: 'absolute',
+        left: '5%',
         alignSelf: 'center',
-        alignItems:'flex-start'
+        alignItems: 'flex-start'
     }
 })
