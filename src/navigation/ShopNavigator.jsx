@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
+
 //vistas
 import CategoriesScreem from '../screens/CategoriesScreen';
 import ProductsCategoryScreen from '../screens/ProductsCategoryScreen';
@@ -10,9 +10,8 @@ import { colors } from "../global/colorPalette";
 
 const Stack = createNativeStackNavigator();
 
-const Navigator = () => {
+const ShopNavigator = () => {
     return (
-        <NavigationContainer>
             <Stack.Navigator
                 initialRouteName="Categorias"
                 screenOptions={
@@ -38,10 +37,9 @@ const Navigator = () => {
                     component={ProductDetailScreen}
                 />
             </Stack.Navigator>
-        </NavigationContainer>
     )
 }
 
-export default Navigator
+export default ShopNavigator
 
 const styles = StyleSheet.create({})

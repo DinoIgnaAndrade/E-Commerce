@@ -1,17 +1,11 @@
 import { ActivityIndicator } from 'react-native';
 import { useState } from 'react';
 import { useFonts } from 'expo-font';
-
-//import Categories from './src/screens/CategoriesScreen';
-//import ProductsCategoryScreen from './src/screens/ProductsCategoryScreen';
-//import CategoriesScreen from './src/screens/CategoriesScreen';
-
-import Navigator from './src/navigation/Navigator';
+import TabNavigator from './src/navigation/TabNavigator'
 
 export default function App() {
 
-  const [categorySelected, setCategorySelected] = useState('');
-  const [productIdSelected, setProductIdSelected] = useState(null);
+
 
   const [fontLoaded] = useFonts({
     'Josefin-Regular' : require('./assets/fonts/JosefinSans-Italic.ttf'),
@@ -23,6 +17,24 @@ export default function App() {
 
   if(!fontLoaded) return <ActivityIndicator/>
 
+
+
+  return (
+
+    <TabNavigator/>
+
+  );
+}
+
+// import Navigator from './src/navigation/Navigator';
+
+//import Categories from './src/screens/CategoriesScreen';
+//import ProductsCategoryScreen from './src/screens/ProductsCategoryScreen';
+//import CategoriesScreen from './src/screens/CategoriesScreen';
+
+  // const [categorySelected, setCategorySelected] = useState('');
+  // const [productIdSelected, setProductIdSelected] = useState(null);
+
   // const onSelectCategory = (category) => {
   //   setCategorySelected(category)
   // }
@@ -30,10 +42,6 @@ export default function App() {
   // const onSelectProductId = (item) => {
   //   setProductIdSelected(item);
   // }
-
-  return (
-
-    <Navigator/>
 
 /*   <>
     {
@@ -48,8 +56,4 @@ export default function App() {
     }
     </>
 */
-  );
-}
-
-
 

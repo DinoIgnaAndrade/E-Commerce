@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Pressable, Button } from 'react-native';
 
 import { colors } from '../global/colorPalette';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faCaretLeft } from '@fortawesome/free-solid-svg-icons/faCaretLeft'
+import { faCaretLeft } from '@fortawesome/free-solid-svg-icons/faCaretLeft';
 import { useEffect, useState } from 'react';
 
 const Header = ({
@@ -12,28 +12,22 @@ const Header = ({
     route
 }) => {
 
-    const [ifButton, setIfButton] = useState(true)
+    // const [ifButton, setIfButton] = useState(true)
 
-    useEffect(() => {
-        if(route.name==='Categorias'){
-            setIfButton(true);
-        }else{
-            setIfButton(false);
-        };
-    }, [ifButton])
-    
+    // useEffect(() => {
+    //     if (route.name === 'Categorias') {
+    //         setIfButton(true);
+    //     } else {
+    //         setIfButton(false);
+    //     };
+    // }, [ifButton])
+
 
     return (
         <>
             {
-                ifButton
+                navigation.canGoBack()
                     ?
-                    <View>
-                        <View style={[styles.headerContainer, { backgroundColor: color }]}>
-                            <Text style={styles.headerTitle}>{title}</Text>
-                        </View>
-                    </View>
-                    :
                     <View>
                         <View style={[styles.headerWithButtom, { backgroundColor: color }]}>
                             <Pressable
@@ -49,6 +43,12 @@ const Header = ({
                             <Text style={styles.headerTitle}>{title}</Text>
                         </View>
                     </View>
+                    :
+                    <View>
+                        <View style={[styles.headerContainer, { backgroundColor: color }]}>
+                            <Text style={styles.headerTitle}>{title}</Text>
+                        </View>
+                    </View>
             }
         </>
     )
@@ -61,16 +61,16 @@ const styles = StyleSheet.create({
         flexBasic: 'auto',
         height: 'auto',
         alignItems: 'center',
-        borderBottomEndRadius: 100,
-        borderBottomStartRadius: 100,
+        borderBottomEndRadius: 5,
+        borderBottomStartRadius: 5,
     },
     headerWithButtom: {
         flexDirection: 'row',
         justifyContent: 'center',
         height: 'auto',
         alignItems: 'center',
-        borderBottomEndRadius: 100,
-        borderBottomStartRadius: 100,
+        borderBottomEndRadius: 5,
+        borderBottomStartRadius: 5,
     },
     headerTitle: {
         padding: 10,

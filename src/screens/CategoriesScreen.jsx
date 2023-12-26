@@ -23,14 +23,11 @@ const CategoriesScreen = (
 
     return (
         <View style={styles.container}>
-            {/* <Header
-                styles={styles.header}
-                title="Categorías"
-                color={colors.darkBlue} /> */}
             <FlatList
                 data={categories_data}
                 renderItem={renderCategoryItem}
                 keyExtractor={item => item}
+                contentContainerStyle={styles.listContainer}
             />
         </View>
     )
@@ -40,7 +37,16 @@ export default CategoriesScreen
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
-        backgroundColor: colors.white,
+        flex:1,
+        backgroundColor: colors.grey,
     },
+    listContainer:{
+        flexGrow:1,
+        marginBottom:60,
+    }
 })
+
+            {/* <Header
+                styles={styles.header}
+                title="Categorías"
+                color={colors.darkBlue} /> */}
