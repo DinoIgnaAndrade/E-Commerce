@@ -1,12 +1,20 @@
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import { colors } from '../global/colorPalette';
+import { useDispatch } from 'react-redux';
+import { setProductIdSelected } from '../features/shopSlice';
 
 const ProductItem = ({ item, navigation }) => {
+
+  const dispatch = useDispatch()
 
   return (
     <Pressable
       style={styles.container}
-      onPress={() => navigation.navigate('Detalles',item.id)}>
+      onPress={() => {
+        dispatch(setProductIdSelected(item.id))
+        navigation.navigate('Detalles', item.id)
+      }
+      }>
       <Text style={styles.title}>{item.title}</Text>
       <Image
         style={styles.image}
@@ -32,11 +40,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.orange,
     shadowColor: colors.black,
     shadowOffset: {
-        height: 10,
-        width: 10,
+      height: 10,
+      width: 10,
     },
     elevation: 5,
-    shadowOpacity: 50, 
+    shadowOpacity: 50,
     shadowRadius: 20
   },
   title: {

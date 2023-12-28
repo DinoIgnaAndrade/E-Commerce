@@ -1,10 +1,11 @@
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { colors } from '../global/colorPalette';
 
-import Header from '../components/Header';
+// import Header from '../components/Header';
 import CategoryItem from '../components/CategoryItem';
+import { useSelector } from 'react-redux';
 
-import categories_data from '../data/categories_data.json';
+// import categories_data from '../data/categories_data.json';
 
 
 const CategoriesScreen = (
@@ -12,6 +13,8 @@ const CategoriesScreen = (
         navigation
     }
 ) => {
+
+    const categories = useSelector(state => state.shopSlice.categories)
 
     const renderCategoryItem = ({ item }) => (
         <CategoryItem
@@ -24,7 +27,7 @@ const CategoriesScreen = (
     return (
         <View style={styles.container}>
             <FlatList
-                data={categories_data}
+                data={categories}
                 renderItem={renderCategoryItem}
                 keyExtractor={item => item}
                 contentContainerStyle={styles.listContainer}

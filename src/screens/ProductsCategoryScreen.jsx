@@ -1,12 +1,14 @@
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { useEffect, useState } from 'react';
 
-import products_data from '../data/products_data.json';
+// import products_data from '../data/products_data.json';
 import { colors } from '../global/colorPalette';
 
 import ProductItem from '../components/ProductItem';
 import Header from '../components/Header';
 import SearchInput from '../components/SearchInput';
+
+import { useSelector, useDispatch } from 'react-redux';
 
 
 
@@ -20,10 +22,14 @@ const ProductsCategoryScreen = (
   const [productsByCastegory, setProductsByCastegory] = useState([]);
   const [search, setSearch] = useState('');
 
-  const { category } = route.params;
+  // const { category } = route.params;
+
+  const category = useSelector(state=>state.shopSlice.categorySelected)
+  const productsFilteredByCategory = useSelector(state=>state.shopSlice.productsFilteredByCategory)
 
   useEffect(() => {
-    const productsFilteredByCategory = products_data.filter(product => product.category === category)
+
+    // const productsFilteredByCategory = products_data.filter(product => product.category === category)
 
     const searchFiltered = productsFilteredByCategory.filter(
       product => product.title.toLowerCase().includes(
