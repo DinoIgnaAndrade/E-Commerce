@@ -1,9 +1,10 @@
 import { ActivityIndicator } from 'react-native';
 import { useState } from 'react';
 import { useFonts } from 'expo-font';
-import TabNavigator from './src/navigation/TabNavigator';
 import { Provider } from 'react-redux';
+
 import store from './src/store';
+import MainNavigator from './src/navigation/MainNavigator'
 
 export default function App() {
 
@@ -23,41 +24,11 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <TabNavigator />
+      <MainNavigator />
     </Provider>
 
 
   );
 }
 
-// import Navigator from './src/navigation/Navigator';
-
-//import Categories from './src/screens/CategoriesScreen';
-//import ProductsCategoryScreen from './src/screens/ProductsCategoryScreen';
-//import CategoriesScreen from './src/screens/CategoriesScreen';
-
-// const [categorySelected, setCategorySelected] = useState('');
-// const [productIdSelected, setProductIdSelected] = useState(null);
-
-// const onSelectCategory = (category) => {
-//   setCategorySelected(category)
-// }
-
-// const onSelectProductId = (item) => {
-//   setProductIdSelected(item);
-// }
-
-/*   <>
-    {
-       Operador Ternario 
-      categorySelected
-      ?
-      <ProductsCategoryScreen 
-        category={categorySelected}
-        onSelectCategoryEvent={onSelectCategory} />
-      :
-      <CategoriesScreen onSelectCategoryEvent={onSelectCategory} />
-    }
-    </>
-*/
 

@@ -1,26 +1,26 @@
 import { View, Text, StyleSheet, ActivityIndicator, Pressable, Image, ScrollView } from 'react-native';
-import products from '../data/products_data.json';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import Header from '../components/Header';
-
-import { colors } from '../global/colorPalette';
+import { addItem } from '../features/cartSlice';
+import { setProductSelected } from '../features/shopSlice';
+import { colors } from '../global/colorPalette';;
 
 const ProductDetailScreen = ({ route }) => {
 
-  const [productSelected, setProductSelected] = useState({});
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-
   const productId = route.params;
-
-  console.log(productId);
+  const productSelected = useSelector(state=>state.shopReducer.productSelected)
 
   useEffect(() => {
-    const productFinder = products.find(product => product.id === productId);
-    setProductSelected(productFinder);
+    dispatch(setProductSelected(productId));
     setIsLoading(false);
-
   }, [productId])
+
+  const onAddToCart = () => {
+    dispatch(addItem({...productSelected, quantity: 1}));
+  }
 
 
   return (
@@ -31,9 +31,7 @@ const ProductDetailScreen = ({ route }) => {
           <ActivityIndicator />
           :
           <>
-            {/* <Header 
-              title='Detalles'
-              color={colors.lightBlue} /> */}
+
             <ScrollView style={styles.container}>
               <Image
                 style={styles.image}
@@ -51,8 +49,8 @@ const ProductDetailScreen = ({ route }) => {
 
                   <Pressable
                     style={styles.buttom}
-                    onPress={() => null}>
-                    <Text style={styles.textButtom}>Comprar</Text>
+                    onPress={onAddToCart}>
+                    <Text style={styles.textButtom}>Agregar</Text>
                   </Pressable>
 
                 </View>

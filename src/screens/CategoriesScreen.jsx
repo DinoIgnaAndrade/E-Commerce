@@ -1,20 +1,16 @@
 import { View, Text, StyleSheet, FlatList } from 'react-native';
+
 import { colors } from '../global/colorPalette';
-
-// import Header from '../components/Header';
 import CategoryItem from '../components/CategoryItem';
-import { useSelector } from 'react-redux';
-
-// import categories_data from '../data/categories_data.json';
+import { useGetCategoriesQuery } from '../services/shopServices';
 
 
 const CategoriesScreen = (
     {
         navigation
-    }
-) => {
+    }) => {
 
-    const categories = useSelector(state => state.shopSlice.categories)
+    const {data, isLoading, error} = useGetCategoriesQuery();
 
     const renderCategoryItem = ({ item }) => (
         <CategoryItem
@@ -23,11 +19,10 @@ const CategoriesScreen = (
             color={colors.gold} />
     )
 
-
     return (
         <View style={styles.container}>
             <FlatList
-                data={categories}
+                data={data}
                 renderItem={renderCategoryItem}
                 keyExtractor={item => item}
                 contentContainerStyle={styles.listContainer}
@@ -40,16 +35,16 @@ export default CategoriesScreen
 
 const styles = StyleSheet.create({
     container: {
-        flex:1,
+        flex: 1,
         backgroundColor: colors.grey,
     },
-    listContainer:{
-        flexGrow:1,
-        marginBottom:60,
+    listContainer: {
+        flexGrow: 1,
+        marginBottom: 60,
     }
 })
 
-            {/* <Header
+{/* <Header
                 styles={styles.header}
                 title="Categorías"
                 color={colors.darkBlue} /> */}

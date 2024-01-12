@@ -1,16 +1,10 @@
 import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { useEffect, useState } from 'react';
-
-// import products_data from '../data/products_data.json';
-import { colors } from '../global/colorPalette';
-
-import ProductItem from '../components/ProductItem';
-import Header from '../components/Header';
-import SearchInput from '../components/SearchInput';
-
 import { useSelector, useDispatch } from 'react-redux';
 
-
+import SearchInput from '../components/SearchInput';
+import ProductItem from '../components/ProductItem';
+import { useGetProductsByCategoryQuery } from '../services/shopServices';
 
 const ProductsCategoryScreen = (
   {
@@ -21,24 +15,20 @@ const ProductsCategoryScreen = (
 
   const [productsByCastegory, setProductsByCastegory] = useState([]);
   const [search, setSearch] = useState('');
+  const category = useSelector(state => state.shopReducer.categorySelected)
 
-  // const { category } = route.params;
 
-  const category = useSelector(state=>state.shopSlice.categorySelected)
-  const productsFilteredByCategory = useSelector(state=>state.shopSlice.productsFilteredByCategory)
+  const { data: productsFilteredByCategory, isLoading, error } = useGetProductsByCategoryQuery(category);
+
 
   useEffect(() => {
+    if (!isLoading) {
+      const productsValues = Object.values(productsFilteredByCategory)
+      const searchFiltered = productsValues.filter(product => product.title.toLowerCase().includes(search.toLowerCase()))
+      setProductsByCastegory(searchFiltered)
+    }
 
-    // const productsFilteredByCategory = products_data.filter(product => product.category === category)
-
-    const searchFiltered = productsFilteredByCategory.filter(
-      product => product.title.toLowerCase().includes(
-        search.toLowerCase()))
-
-    setProductsByCastegory(searchFiltered)
-
-  }, [category, search])
-
+  }, [isLoading,category, search])
 
   const renderProducts = ({ item }) => (
     <ProductItem item={item} navigation={navigation} />
@@ -51,13 +41,11 @@ const ProductsCategoryScreen = (
   return (
     <>
       {
-        productsByCastegory
+        isLoading
           ?
+          <ActivityIndicator />
+          :
           <View style={styles.container}>
-            {/* <Header
-        title={'Productos'}
-        color={colors.orange}
-        category={category} /> */}
             <SearchInput onSearchHandlerEvent={onSearch} />
             <FlatList
               data={productsByCastegory}
@@ -65,8 +53,7 @@ const ProductsCategoryScreen = (
               keyExtractor={item => item.id}
             />
           </View>
-          :
-          <ActivityIndicator />
+
       }
     </>
   )

@@ -12,17 +12,6 @@ const Header = ({
     route
 }) => {
 
-    // const [ifButton, setIfButton] = useState(true)
-
-    // useEffect(() => {
-    //     if (route.name === 'Categorias') {
-    //         setIfButton(true);
-    //     } else {
-    //         setIfButton(false);
-    //     };
-    // }, [ifButton])
-
-
     return (
         <>
             {

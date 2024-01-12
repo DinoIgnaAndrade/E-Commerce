@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { colors } from '../global/colorPalette';
@@ -17,7 +16,6 @@ const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
     return (
-        <NavigationContainer>
             <Tab.Navigator
                 screenOptions={{
                     headerShown: false,
@@ -52,7 +50,6 @@ const TabNavigator = () => {
                             size={25} />),
                     }} />
             </Tab.Navigator>
-        </NavigationContainer>
     )
 }
 
