@@ -8,6 +8,12 @@ node_modules/
 dist/
 web-build/
 
+# database
+firebase/
+
+#apis
+apis/
+
 # Native
 *.orig.*
 *.jks
@@ -29,11 +35,8 @@ yarn-error.*
 *.pem
 
 # local env files
-.env*.local
+.env
 
 # typescript
 *.tsbuildinfo
-
-# database
-firebase/
 
