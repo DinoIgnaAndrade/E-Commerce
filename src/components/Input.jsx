@@ -11,13 +11,11 @@ const Input = ({ label, isSecureEntry = false , error = " " , onChange }) => {
         onChange(text)
     }
 
-
-
     return (
         <View style={styles.inputContainer}>
             <Text style={styles.label}>{label}</Text>
             <TextInput
-                style={styles.input}
+                style={styles.textInput}
                 onChangeText={onHandleCHangeText}
                 secureTextEntry={isSecureEntry}
                 value={input}
@@ -27,8 +25,20 @@ const Input = ({ label, isSecureEntry = false , error = " " , onChange }) => {
     )
 }
 
-export default Input
+export default Input;
 
 const styles = StyleSheet.create({
-    
+    inputContainer:{
+        padding:18,
+    },
+    label:{
+
+    },
+    textInput:{
+        backgroundColor: colors.white,
+        paddingStart:15,
+        borderRadius:30,
+        width:300,
+        height:30
+    }
 })

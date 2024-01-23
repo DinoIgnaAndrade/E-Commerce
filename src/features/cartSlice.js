@@ -9,7 +9,6 @@ export const cartSlice = createSlice({
             items: []
     },
     reducers: {
-
         addItem: (state, action) => {
             const isProductInCart = state.items.find(item => item.id === action.payload.id)
             if (!isProductInCart) {

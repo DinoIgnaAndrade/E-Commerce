@@ -1,6 +1,5 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View, TextInput } from 'react-native';
 import { useState } from 'react';
-import { TextInput } from 'react-native-web';
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons/faMagnifyingGlass';
@@ -31,7 +30,7 @@ const SearchInput = ({
         <>
             <View style={styles.container}>
                 <TextInput
-                    style={styles.input}
+                    style={styles.tInput}
                     onChangeText={setSearch}
                     placeholder='Buscar...'
                     value={search} />
@@ -43,7 +42,7 @@ const SearchInput = ({
                     <FontAwesomeIcon
                         icon={faMagnifyingGlass}
                         size={30}
-                        color={' lightGreen '}
+                        color={'green'}
                     />
                 </Pressable>
 
@@ -54,7 +53,7 @@ const SearchInput = ({
                     <FontAwesomeIcon
                         icon={faXmark}
                         size={32}
-                        color={' Red '}
+                        color={'red'}
                     />
                 </Pressable>
             </View>
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.middleBlue,
         borderRadius: 30,
     },
-    input: {
+    tInput: {
         borderRadius: 30,
         paddingStart: 1,
         alignSelf: 'center',

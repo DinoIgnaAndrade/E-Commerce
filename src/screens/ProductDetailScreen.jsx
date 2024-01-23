@@ -4,24 +4,28 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { addItem } from '../features/cartSlice';
 import { setProductSelected } from '../features/shopSlice';
-import { colors } from '../global/colorPalette';;
+import { colors } from '../global/colorPalette';
+import { useGetProductsByCategoryQuery } from '../services/shopServices';
+import Carrousel from '../components/Carrousel';
 
-const ProductDetailScreen = ({ route }) => {
+
+const ProductDetailScreen = () => {
 
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
-  const productId = route.params;
-  const productSelected = useSelector(state=>state.shopReducer.productSelected)
+  
+  const category = useSelector(state => state.shopReducer.categorySelected)
+  const id = useSelector(state => state.shopReducer.productIdSelected)
+  const { data: products, isLoading, error } = useGetProductsByCategoryQuery(category);
 
-  useEffect(() => {
-    dispatch(setProductSelected(productId));
-    setIsLoading(false);
-  }, [productId])
+  const productsArray = Object.values(products);
+  const searchId = productsArray.find(product => product.id == id);
+  dispatch(setProductSelected(searchId))
+
+  const productSelected = useSelector(state => state.shopReducer.productSelected)
 
   const onAddToCart = () => {
-    dispatch(addItem({...productSelected, quantity: 1}));
+    dispatch(addItem({ ...productSelected, quantity: 1 }));
   }
-
 
   return (
     <>
@@ -30,34 +34,33 @@ const ProductDetailScreen = ({ route }) => {
           ?
           <ActivityIndicator />
           :
-          <>
+          <ScrollView>
+            {/* <Image
+              source={{ uri: productSelected.images[0] }}
+              style={styles.image}
+              resizeMode='cover'
+            /> */}
+            <Carrousel />
+            <View
+              style={styles.container}>
+              <Text style={styles.title}>{productSelected.title}</Text>
+              <Text style={styles.description}>{productSelected.description}</Text>
 
-            <ScrollView style={styles.container}>
-              <Image
-                style={styles.image}
-                source={{ uri: productSelected.images[0] }}
-                resizeMode='cover'
-              />
-              <View
-                style={styles.container}>
-                <Text style={styles.title}>{productSelected.title}</Text>
-                <Text style={styles.description}>{productSelected.description}</Text>
+              <View styles={styles.buttomContainer}>
 
-                <View styles={styles.buttomContainer}>
+                <Text style={styles.price}>{productSelected.price}$</Text>
 
-                  <Text style={styles.price}>{productSelected.price}$</Text>
-
-                  <Pressable
-                    style={styles.buttom}
-                    onPress={onAddToCart}>
-                    <Text style={styles.textButtom}>Agregar</Text>
-                  </Pressable>
-
-                </View>
+                <Pressable
+                  style={styles.buttom}
+                  onPress={onAddToCart}>
+                  <Text style={styles.textButtom}>Agregar</Text>
+                </Pressable>
 
               </View>
-            </ScrollView>
-          </>
+
+            </View>
+          </ScrollView>
+
       }
 
     </>
@@ -67,53 +70,41 @@ const ProductDetailScreen = ({ route }) => {
 export default ProductDetailScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    borderRadius: 30,
-    backgroundColor: colors.grey,
-  },
   image: {
-    padding: 10,
-    height: '200%',
+    minWidth: 300,
     width: '100%',
+    height: 400,
+  },
+  container: {
+    flex:1,
+    alignItems: 'center',
   },
   title: {
-    fontSize: 30,
-    margin: 10,
-    backgroundColor: colors.middleBlue,
-    borderRadius: 25,
-    textAlign: 'center',
+    fontFamily: 'Josefin-Bold',
+    fontSize: 32,
   },
   description: {
-    fontSize: 22,
-    margin: 5,
+    fontFamily: 'Josefin-Regular',
+    fontSize: 20,
   },
   buttomContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
 
   },
   price: {
-    flex: 1,
-    textAlign: 'center',
-    margin: 5,
-    marginHorizontal: 150,
-    fontSize: 18,
-
-
+    fontFamily: 'Josefin-Bold',
+    alignSelf:'center',
+    fontSize: 32,
+    color: colors.orange
   },
   buttom: {
-    flex: 1,
-    paddingBottom:30,
-    marginBottom:50
+    marginTop: 10,
+    width: 200,
+    padding: 10,
+    alignItems: 'center',
+    backgroundColor: 'green',
+    borderRadius: 10,
   },
   textButtom: {
-    textAlign: 'center',
-    backgroundColor: colors.orange,
-    borderRadius: 30,
-    marginHorizontal: 130,
-    fontSize: 18,
-    minWidth: 30,
+    color: '#fff',
   },
 })

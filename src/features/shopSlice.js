@@ -7,10 +7,10 @@ export const shopSlice = createSlice({
     initialState: {
         categorySelected: "",
         productIdSelected: 0,
-        categories: categories_data,
-        products: products_data,
+        categories: [],
+        products: [],
         productsFilteredByCategory: [],
-        productSelected: {}
+        productSelected: {},
     },
     reducers: {
         setCategorySelected: (state, action) => {
@@ -21,7 +21,7 @@ export const shopSlice = createSlice({
             state.productIdSelected = action.payload
         },
         setProductSelected: (state, action) => {
-            state.productSelected = state.products.find(product=>product.id===action.payload)
+            state.productSelected = action.payload
         }
     }
 })

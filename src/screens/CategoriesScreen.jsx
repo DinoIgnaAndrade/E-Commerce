@@ -2,12 +2,13 @@ import { View, Text, StyleSheet, FlatList } from 'react-native';
 
 import { colors } from '../global/colorPalette';
 import CategoryItem from '../components/CategoryItem';
-import { useGetCategoriesQuery } from '../services/shopServices';
+import { useGetCategoriesQuery, useGetProductsQuery } from '../services/shopServices';
 
 
 const CategoriesScreen = (
     {
         navigation
+
     }) => {
 
     const {data, isLoading, error} = useGetCategoriesQuery();
@@ -40,11 +41,6 @@ const styles = StyleSheet.create({
     },
     listContainer: {
         flexGrow: 1,
-        marginBottom: 60,
+        paddingBottom:60,
     }
 })
-
-{/* <Header
-                styles={styles.header}
-                title="Categorías"
-                color={colors.darkBlue} /> */}

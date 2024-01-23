@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
 import { shopApi } from "../services/shopServices";
-import { authApi } from "../services/AuthServices";
+import { authApi } from "../services/authServices";
 
 import shopReducer from "../features/shopSlice";
 import cartReducer from "../features/cartSlice";

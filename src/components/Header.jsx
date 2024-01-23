@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         borderBottomStartRadius: 5,
     },
     headerTitle: {
-        padding: 10,
+        padding: 20,
         fontFamily: 'Josefin-Bold',
         fontSize: 30,
         color: 'white',

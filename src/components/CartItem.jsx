@@ -1,19 +1,19 @@
 import { Pressable, StyleSheet, Text, View, Image } from 'react-native';
 import Card from './Card';
-import { Colors } from '../global/colorPalette';
+import { Colors, colors } from '../global/colorPalette';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faSquareMinus } from '@fortawesome/free-solid-svg-icons/faSquareMinus';
 
 
 const CartItem = ({ item }) => {
     return (
-        <Card styles={styles.cartItemContainer}>
+        <Card style={styles.container} >
             <Image
-                style={styles.imageCartContainer}
+                style={styles.imageCartItem}
                 resizeMode='cover'
                 source={{ uri: item.thumbnail }}
             />
-            <View>
+            <View style={styles.infoContainer}>
                 <Text style={styles.title}>{item.title}</Text>
                 <Text style={styles.brand}>{item.brand}</Text>
                 <Text style={styles.price}>${item.price}</Text>
@@ -34,27 +34,31 @@ const CartItem = ({ item }) => {
 export default CartItem;
 
 const styles = StyleSheet.create({
-    cartItemContainer: {
-        flex:1,
-        flexDirection:'row'
+    container: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 10,
+        padding: 20,
+  
     },
-    imageCartContainer: {
-
+    imageCartItem: {
+        height: 50,
+        width: 50,
+        marginRight: 10,
+        borderRadius:10,
+    },
+    infoContainer: {
     },
     title: {
-
     },
     brand: {
-
     },
     price: {
-
     },
     total: {
-
     },
     buttom: {
-
+        marginLeft: 'auto',
     },
 
 })
