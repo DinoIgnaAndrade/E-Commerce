@@ -10,7 +10,9 @@ import Location from '../components/LocationSelector.jsx'
 
 
 const ProfileScreen = ({ navigation }) => {
+
     const image = useSelector(state => state.authReducer.profilePicture)
+    const location = useSelector(state => state.authReducer.location)
 
     return (
         <View style={styles.container}>
@@ -51,9 +53,17 @@ const ProfileScreen = ({ navigation }) => {
                     <Text style={styles.userData}>{user_data.city}</Text>
                 </View>
 
-                
             </View>
 
+            {
+                location.address
+                &&
+                <View style={styles.addressContainer}>
+                    <Text style={styles.addressTitle}>Dirección: Ultima Ubicacion Guardada</Text>
+                    <Text style={styles.addressDescription}>{location.address}</Text>
+                </View>
+
+            }
             <Location />
 
         </View>
@@ -63,8 +73,8 @@ const ProfileScreen = ({ navigation }) => {
 export default ProfileScreen
 
 const styles = StyleSheet.create({
-    container:{
-        
+    container: {
+
     },
     subContainer: {
         flexDirection: 'row',
@@ -103,7 +113,8 @@ const styles = StyleSheet.create({
         gap: 5,
         padding: 10,
         margin: 10,
-        borderRadius: 10,
+        borderRadius: 30,
+        backgroundColor:colors.black
     },
     addressTitle: {
         fontFamily: 'Josefin-Bold',

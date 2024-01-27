@@ -28,12 +28,11 @@ const LocationSelector = () => {
             let location = await Location.getCurrentPositionAsync()
             setLocation({
                 latitude: location.coords.latitude,
-                longitude: location.coords.longitude
+                longitude: location.coords.longitude,
             })
         })()
 
     }, [])
-    console.log(location)
 
     useEffect(() => {
         (async () => {
@@ -56,7 +55,7 @@ const LocationSelector = () => {
         const locationFormatted = {
             latitude: location.latitude,
             longitude: location.longitude,
-            address: location.address
+            address: address,
         }
         dispatch(setUserLocation(locationFormatted))
 
@@ -95,5 +94,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingBottom: 130,
         gap: 5,
+    },
+    btn:{
+        backgroundColor:'black',
+    },
+    txtBtn:{
+        color:'#fff',
     }
 })

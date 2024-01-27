@@ -6,8 +6,13 @@ import { Provider } from 'react-redux';
 import store from './src/store';
 import MainNavigator from './src/navigation/MainNavigator'
 import { ShopSliceInitializer } from './src/features/shopSlice';
+import { init } from './src/db'; 
 
 export default function App() {
+
+  init()
+  .then(()=>console.log('DB init'))
+  .catch((error)=>console.log('error al inicialiuzar',error.message))
 
   const [fontLoaded] = useFonts({
     'Josefin-Regular': require('./assets/fonts/JosefinSans-Italic.ttf'),

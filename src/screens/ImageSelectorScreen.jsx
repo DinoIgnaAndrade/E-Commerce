@@ -21,7 +21,6 @@ const ImageSelectorScreen = ({navigation}) => {
     if(!granted){
       return false
     }
-    console.log('permisos otorgados')
     return true
   }
 

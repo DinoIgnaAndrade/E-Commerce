@@ -7,6 +7,7 @@ import { colors } from '../global/colorPalette';
 import { useLogInMutation } from '../services/authServices';
 import { setUser } from '../features/authSlice';
 import { LinearGradient } from 'react-native-svg';
+import { insertData } from '../db';
 
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState("");
@@ -22,7 +23,15 @@ const LoginScreen = ({ navigation }) => {
     useEffect(() => {
         if (result.data) {
             dispatch(setUser(result.data))
+            insertData({
+                localId: result.data.localId,
+                email: result.data.email,
+                token: result.data.idToken
+            })
+                .then(result => console.log('User Insert', result))
+                .catch(error => console.log('Insert User Error', error.message))
         }
+
     }, [result])
 
     return (
@@ -67,35 +76,35 @@ const styles = StyleSheet.create({
         backgroundColor: colors.darkBlue,
         justifyContent: 'center',
         alignItems: 'center',
-        gap:15,
+        gap: 15,
     },
-    inputContainer:{
-        backgroundColor:colors.lightBlue,
+    inputContainer: {
+        backgroundColor: colors.lightBlue,
         borderRadius: 30,
     },
     buttom: {
-        padding:20,
-        backgroundColor:colors.orange,
+        padding: 20,
+        backgroundColor: colors.orange,
         alignSelf: 'center',
-        borderRadius:30,
-        marginBottom:10,
+        borderRadius: 30,
+        marginBottom: 10,
     },
-    signUpContainer:{
-        alignItems:'center',
-        borderRadius:30,
-        padding:15,
-        width:350,
-        backgroundColor:colors.black,
-        gap:5,
+    signUpContainer: {
+        alignItems: 'center',
+        borderRadius: 30,
+        padding: 15,
+        width: 350,
+        backgroundColor: colors.black,
+        gap: 5,
     },
-    subtitle:{
-        color:colors.white,
+    subtitle: {
+        color: colors.white,
     },
-    subtitleLink:{
+    subtitleLink: {
         backgroundColor: colors.white,
-        padding:5,
-        paddingHorizontal:10,
-        borderRadius:20
+        padding: 5,
+        paddingHorizontal: 10,
+        borderRadius: 20
     }
 
 })

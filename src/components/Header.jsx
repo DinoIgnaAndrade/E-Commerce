@@ -1,9 +1,14 @@
 import { View, Text, StyleSheet, Pressable, Button } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { colors } from '../global/colorPalette';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCaretLeft } from '@fortawesome/free-solid-svg-icons/faCaretLeft';
 import { useEffect, useState } from 'react';
+import { logout } from '../features/authSlice';
+import { deleteData } from '../db';
+
+
 
 const Header = ({
     title,
@@ -12,12 +17,20 @@ const Header = ({
     route
 }) => {
 
+    const localId = useSelector(state => state.authReducer.localId)
+    const email = useSelector(state => state.authReducer.user)
+    const dispatch = useDispatch()
+
+    const onLogout = ()=>{
+        dispatch(logout())
+        const deleteSession = deleteData(localId)
+    }
+
     return (
         <>
             {
                 navigation.canGoBack()
                     ?
-                    <View>
                         <View style={[styles.headerWithButtom, { backgroundColor: color }]}>
                             <Pressable
                                 onPress={() => navigation.goBack()}
@@ -31,13 +44,19 @@ const Header = ({
                             </Pressable>
                             <Text style={styles.headerTitle}>{title}</Text>
                         </View>
-                    </View>
                     :
-                    <View>
                         <View style={[styles.headerContainer, { backgroundColor: color }]}>
                             <Text style={styles.headerTitle}>{title}</Text>
+                            {
+                                email
+                                &&
+                                <Pressable 
+                                    onPress={onLogout}
+                                    style={styles.exit}>
+                                    <Text>Salir</Text>
+                                </Pressable>
+                            }
                         </View>
-                    </View>
             }
         </>
     )
@@ -47,8 +66,7 @@ export default Header
 
 const styles = StyleSheet.create({
     headerContainer: {
-        flexBasic: 'auto',
-        height: 'auto',
+        justifyContent:'center',
         alignItems: 'center',
         borderBottomEndRadius: 5,
         borderBottomStartRadius: 5,
@@ -69,8 +87,14 @@ const styles = StyleSheet.create({
     },
     backButtom: {
         position: 'absolute',
+        bottom:'20%',
         left: '5%',
-        alignSelf: 'center',
         alignItems: 'flex-start'
+    },
+    exit:{
+        position:'absolute',
+        right:30,
+        bottom:25,
+        alignSelf:'center',
     }
 })
