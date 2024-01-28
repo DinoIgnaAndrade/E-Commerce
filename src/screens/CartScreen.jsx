@@ -1,21 +1,30 @@
 import { StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import CartItem from '../components/CartItem';
 import { colors } from '../global/colorPalette';
-import { useSelector } from 'react-redux';
 import { usePostOrderMutation } from '../services/shopServices';
 
 const CartScreen = () => {
 
   const cartItem = useSelector(state => state.cartReducer.items);
   const total = useSelector(state => state.cartReducer.total);
-  const updateAt = useSelector(state => state.cartReducer.updateAt)
+
   const user = useSelector(state => state.authReducer.user);
+  const localId = useSelector(state => state.authReducer.localId)
+
   const [triggerPost, result] = usePostOrderMutation();
 
   const confirmCart = () => {
-    triggerPost({ total, cartItem, user, updateAt: Date.now().toLocaleString() })
+    triggerPost({ 
+      user, 
+      localId:localId, 
+      cartItem, 
+      total, 
+      createdAt: Date.now(),
+      orderId: Math.ceil(Math.random(1,10)*1000) 
+    })
   }
 
   const renderCartItem = ({ item }) => (

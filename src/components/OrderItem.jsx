@@ -5,17 +5,30 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons/faMagnifyin
 import Card from './Card';
 import { colors } from '../global/colorPalette';
 
+const OrderItem = ({
 
-const OrderItem = ({ order, total }) => {
+  order, 
+  setOrderId, 
+  setModalVisible
+
+}) => {
+
+  let date = new Date(order.createdAt);
+  date = date.toLocaleString();
+
   return (
     <Card style={styles.container}>
       <View>
         <Text style={styles.createdAt}>
-          creada el {new Date(order.createdAt).toLocaleString()}
+          creada el { date  }
         </Text>
-        <Text>Total: ${total}</Text>
+        <Text>Total: ${order.total}</Text>
       </View>
-      <Pressable style={styles.searchIcon}>
+      <Pressable onPress={()=>{
+        setOrderId(order.orderId)
+        setModalVisible(true)
+      }}
+      style={styles.searchIcon}>
         <FontAwesomeIcon
           icon={faMagnifyingGlass}
           size={30}

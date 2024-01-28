@@ -32,7 +32,6 @@ const MainNavigator = () => {
                 const localData = await fetchData(localId)
                 if(localData?.rows.length){
                     const user = localData.rows._array[0]
-                    console.log(user)
                     dispatch(setUser(user))
                     console.log('Sesion Iniciada') 
                 }
