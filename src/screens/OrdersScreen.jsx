@@ -1,4 +1,4 @@
-import { FlatList, Modal, StyleSheet, Text, View, Pressable } from 'react-native';
+import { FlatList, Modal, StyleSheet, Text, View, Pressable, Buttom } from 'react-native';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -9,7 +9,7 @@ import { useGetOrdersQuery } from '../services/shopServices';
 const OrdersScreen = () => {
 
     const localId = useSelector(state => state.authReducer.localId)
-    const { data, isLoading, error } = useGetOrdersQuery(localId)
+    const { data, isLoading, error, refetch } = useGetOrdersQuery(localId)
     const [orderData, setOrderData] = useState([]);
     const [orderIdSelected, setOrderIdSelected] = useState("");
     const [orderSelected, setOrderSelected] = useState([]);
@@ -22,15 +22,10 @@ const OrdersScreen = () => {
         }
     }, [data, isLoading])
 
-    console.log('Ordenes',orderData)
-
     useEffect(() => {
-        console.log(orderIdSelected)
         const orderSelected = orderData.find(order => order.orderId === orderIdSelected)
         setOrderSelected(orderSelected)
     }, [orderIdSelected])
-
-    console.log('Orden', orderSelected)
 
     const renderOrderItem = ({ item }) => {
         return (
@@ -44,8 +39,20 @@ const OrdersScreen = () => {
         )
     }
 
+    const handleRefresh = async () => {
+        try {
+            await refetch();
+        } catch (error) {
+            console.error('Error al recargar los datos:', error);
+        }
+    };
+
     return (
         <>
+            <Pressable onPress={handleRefresh}>
+                <Text>Actualizar</Text>
+            </Pressable>
+
             <FlatList
                 data={orderData}
                 renderItem={renderOrderItem}
